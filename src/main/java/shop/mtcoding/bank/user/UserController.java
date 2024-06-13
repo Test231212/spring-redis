@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequiredArgsConstructor
 @Controller
@@ -22,6 +23,12 @@ public class UserController {
     public String logout(){
         session.invalidate();
         return "redirect:/login-form";
+    }
+    @GetMapping("/redis/test")
+    public @ResponseBody String redisTest(){
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        System.out.println("username : "+sessionUser.getUsername());
+        return "redis test";
     }
 
     @PostMapping("/login")
